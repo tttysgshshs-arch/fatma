@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هديه ليڪي</title>
+
+<!-- صورة الموقع -->
+<meta property="og:image" content="mm.png" />
+
+    <!-- خط الامير -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 🎥 خلفية الفيديو -->
+    <video autoplay muted loop id="bg-video">
+        <source src="yasser3.mp4" type="video/mp4">
+    </video>
+
+    <!-- 🌫️ كرت تسجيل الدخول -->
+    <div class="login-card glass">
+        <!-- قلب جميل -->
+        <div class="heart-svg">
+            <svg viewBox="0 0 512 512" width="130" height="130">
+                <defs>
+                    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff4b6e"/>
+                        <stop offset="50%" stop-color="#ff1e56"/>
+                        <stop offset="100%" stop-color="#b3003c"/>
+                    </linearGradient>
+                    <radialGradient id="shine" cx="30%" cy="30%" r="50%">
+                        <stop offset="0%" stop-color="rgba(255,255,255,0.8)"/>
+                        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                    </radialGradient>
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="15" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <path filter="url(#glow)"
+                      fill="url(#heartGradient)"
+                      d="M256 464l-32-29C118 336 48 272 48 184
+                         48 120 96 72 160 72c36 0 70 17 96 44
+                         26-27 60-44 96-44 64 0 112 48 112 112
+                         0 88-70 152-176 251l-32 29z"/>
+                <ellipse cx="200" cy="170" rx="90" ry="60" fill="url(#shine)"/>
+            </svg>
+        </div>
+        <!-- 🎯 فورم تسجيل الدخول -->
+        <!-- 🎯 فورم تسجيل الدخول -->
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fa-solid fa-user icon"></i>
+                <input type="text" id="username" placeholder="User Name " required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock icon"></i>
+                <input type="password" id="password" placeholder="Password " required>
+                    <i class="fa-solid fa-eye toggle-password"></i>
+            </div>
+
+            <button type="submit">Long</button>
+        </form>
+    </div>
+<!-- 🎯 صندوق الإشعارات -->
+<div id="notification" class="notification"></div>
+    <script>
+    const form = document.getElementById("loginForm");
+const notification = document.getElementById("notification");
+const heart = document.querySelector(".heart-svg");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // هنا تقدر تغير اليوزر والباسورد الحقيقي
+    const correctUser = "Fatma";
+    const correctPass = "01067486136";
+
+    if(username !== correctUser || password !== correctPass){
+        // ❌ خطأ
+        showNotification("😂الـبـاسـوࢪد غـلـط يـ حـمـاࢪه", "error");
+        heart.classList.add("shake-heart"); // اهتزاز القلب
+        form.classList.add("shake"); // اهتزاز الفورم
+        setTimeout(() => {
+            heart.classList.remove("shake-heart");
+            form.classList.remove("shake");
+        }, 400);
+    } else {
+        // ✅ صح
+        showNotification("تم تسجيل الدخول بنجاح", "success");
+        setTimeout(() => {
+            window.location.href = "/page/page2.html"; // ينقل للصفحة التانية
+        }, 1500);
+    }
+});
+// دالة اظهار النوتيفيكاشن
+function showNotification(message, type){
+    notification.textContent = message;
+    notification.className = "notification " + type + " show";
+
+    // اختفاء الصندوق بعد ثانيتين
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 3000);
+}
+// اختيار أيقونة العين وحقل الباسورد
+const togglePassword = document.querySelector(".toggle-password");
+const passwordInput = document.getElementById("password");
+
+togglePassword.addEventListener("click", function() {
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    // إزالة الخط إذا ظهر الباسوورد، أو إرجاعه لو رجع مخفي
+    if(type === "text") {
+        this.classList.add("fa-eye-slash"); // يظهر الخط للخيار المعاكس
+        this.classList.remove("fa-eye");
+    } else {
+        this.classList.remove("fa-eye-slash"); // الخط يختفي
+        this.classList.add("fa-eye");
+    }
+});
+
+    </script>
+</body>
+</html>
